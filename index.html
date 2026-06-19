@@ -1,23 +1,832 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+
+  <!-- Schema.org 구조화 데이터 (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FinancialService",
+        "@id": "https://www.example.com/polestar4-insurance-2026#service",
+        "name": "폴스타4 다이렉트 보험료 비교 분석 센터",
+        "description": "2026년도 최신 폴스타4 차량의 모델별, 연령대별 평균 보험료 비교분석 및 자차 배터리 특별약관 가이드 정보를 제공합니다.",
+        "url": "https://www.example.com/polestar4-insurance-2026",
+        "telephone": "1500-XXXX",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "서울특별시 서초구 반포대로",
+          "addressLocality": "서초구",
+          "addressRegion": "서울특별시",
+          "postalCode": "06500",
+          "addressCountry": "KR"
+        },
+        "openingHours": "Mo-Fr 09:00-18:00",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "폴스타4 전용 보험 상품군",
+          "itemListElement": [
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"폴스타4 롱레인지 싱글모터 다이렉트 보험"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"폴스타4 롱레인지 듀얼모터 종합 보험"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"전기차 고전압 배터리 신가보상 특약"}},
+            {"@type":"Offer","itemOffered":{"@type":"Service","name":"초기 신규 가입자 전용 운전자 범위 제한 보험"}}
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.example.com/polestar4-insurance-2026#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "폴스타4 보험료는 평균적으로 얼마 정도 예상해야 하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "운전자의 나이와 무사고 경력에 따라 상이하지만, 30대 중반 무사고 기준 롱레인지 싱글모터 모델은 연간 약 80만원에서 100만원 선의 금액이 책정되며, 만 26세 미만 신규 가입 시에는 약 180만원에서 240만원 이상의 비용이 발생할 수 있습니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "폴스타4를 다이렉트로 가입할 때 가장 큰 장점과 단점은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "장점으로는 대면 설계사를 거치지 않아 오프라인 대비 약 15%에서 20% 이상 저렴한 가격으로 가입이 가능하며 모바일 앱이나 어플을 통해 간편하게 비교해 볼 수 있다는 점이 있습니다. 단점은 고전압 배터리 파손 대비 특약이나 견인 거리 확대 특약 등 복잡한 전기차 전문 약관을 오너가 직접 판단하여 선택해야 하므로 다소 번거로울 수 있습니다."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* 다채롭고 부드러운 고급 인디고 & 틸 테마 레이아웃 */
+    :root {
+      --primary-color: #312e81; /* 깊은 인디고 */
+      --secondary-color: #0f766e; /* 세련된 틸 */
+      --accent-color: #b45309; /* 차분한 앰버 */
+      --bg-light: #f8fafc; /* 밝은 회청색 */
+      --bg-card: #ffffff;
+      --text-main: #1e293b; /* 짙은 슬레이트 */
+      --text-muted: #475569; /* 부드러운 회색 */
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 20px rgba(49, 46, 129, 0.06);
+    }
+
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      color: #ffffff;
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 5px solid var(--secondary-color);
+    }
+
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin: 0 0 15px 0;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 750px;
+      margin: 0 auto 30px auto;
+    }
+
+    nav {
+      background-color: #ffffff;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 15px 0;
+      margin: 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--secondary-color);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background: var(--bg-card);
+      padding: 45px;
+      margin-bottom: 40px;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      color: var(--primary-color);
+      border-left: 5px solid var(--secondary-color);
+      padding-left: 15px;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: var(--secondary-color);
+      margin-top: 35px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    strong {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 30px 0;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* 차트 및 가독성 박스 디자인 */
+    .chart-container {
+      margin: 40px 0;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .info-callout {
+      background-color: #f0fdfa;
+      border-left: 4px solid var(--secondary-color);
+      padding: 20px 25px;
+      border-radius: 0 12px 12px 0;
+      margin: 30px 0;
+    }
+
+    .info-callout p {
+      margin: 0;
+      color: #0f766e;
+      font-weight: 600;
+    }
+
+    /* 가입 및 견적 폼 영역 디자인 */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    select,
+    textarea {
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+      color: var(--text-main);
+      transition: all 0.25s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--secondary-color);
+      cursor: pointer;
+    }
+
+    .checkbox-item label {
+      margin: 0;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    button.cta-submit {
+      background-color: var(--secondary-color);
+      color: #ffffff;
+      padding: 16px 36px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+    }
+
+    button.cta-submit:hover {
+      background-color: #0d9488;
+    }
+
+    button.cta-submit:active {
+      transform: scale(0.99);
+    }
+
+    /* FAQ 토글 구조 */
+    .faq-container {
+      margin-top: 30px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    .faq-content {
+      display: none;
+      padding-top: 15px;
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .external-link-list li {
+      margin-bottom: 15px;
+    }
+
+    .external-link-list a {
+      color: var(--secondary-color);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-bottom 0.2s ease;
+    }
+
+    .external-link-list a:hover {
+      border-bottom: 1px solid var(--secondary-color);
+    }
+
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+    }
+
+    footer p {
+      text-align: center;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <h1>폴스타4 보험료 2026년 완전 정복 가이드</h1>
+      <p>연령대별 평균 가입 비용 정보부터 롱레인지 싱글 및 듀얼모터 모델별 예상 가격 비교, 다이렉트 할인 혜택 설계까지 합리적인 전기차 보험 선택의 기준을 확인하십시오.</p>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#intro">시장 트렌드</a></li>
+      <li><a href="#pricing-analysis">모델별 연령별 비교</a></li>
+      <li><a href="#pro-con">다이렉트 장단점</a></li>
+      <li><a href="#saving-methods">보험료 절감 전략</a></li>
+      <li><a href="#community-feedback">실제 가입 후기</a></li>
+      <li><a href="#faq-section">자주 묻는 질문</a></li>
+      <li><a href="#calculator-form">모의 견적 계산기</a></li>
+      <li><a href="#external-resources">신뢰 기관 링크</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="intro">
+      <h2>2026년 전기차 시장과 폴스타4 보험의 중요성</h2>
+      <p>수입 전기차 시장에서 프리미엄 세그먼트의 새로운 기준을 제시한 폴스타4는 혁신적인 쿠페형 SUV 디자인과 독창적인 후방 윈도우리스 설계로 많은 주목을 받고 있습니다. 차량을 구매하거나 인수를 앞둔 시점에서 오너들이 가장 당면하게 되는 실제 유지비 영역이 바로 매년 갱신해야 하는 자동차 보장 자금입니다.</p>
+      
+      <p>전기자동차는 내연기관 차량과 비교했을 때 고전압 배터리의 높은 가격과 전용 정비 인프라의 희소성 등으로 인해 평균적인 수리비 단가가 상대적으로 높게 설정되어 있습니다. 이 때문에 자동차 보장을 신규 가입할 때 산출되는 기본적인 기본 보험료 금액 역시 일반 가솔린이나 디젤 중형 SUV에 비해 약 10%에서 많게는 30% 가까이 비싼 가격 흐름을 보여줍니다. 이에 따라 차량 출고 전 각 손해보험 브랜드의 인터넷 다이렉트 가입 전용 웹사이트나 모바일 어플을 통해 정밀 비교를 선행하는 것이 비용 낭비를 예방하는 최적의 방법입니다.</p>
+
+      <div class="info-callout">
+        <p>전기차 보험 가입 시에는 반드시 배터리 파손 시 전액 보상이 가능한 배터리 신가보상 특별약관 및 견인 거리 기본 50km 이상 확대 특약을 필수적으로 설정하여 불의의 사고에 완벽히 대처해야 합니다.</p>
+      </div>
+    </section>
+
+    <section id="pricing-analysis">
+      <h2>폴스타4 연령별 모델별 평균 예상 보험료 비교</h2>
+      <p>폴스타4의 트림 체계는 크게 실용성과 주행 거리에 초점을 맞춘 롱레인지 싱글모터와 고성능 스포츠 드라이빙에 특화된 롱레인지 듀얼모터로 이원화되어 있습니다. 두 트림은 차량 출고 가액에서 대략 500만원 내외의 차이가 발생하며, 이는 고스란히 자기차량손해(자차) 담보 가액에 반영되어 최종적인 예상 견적 금액을 결정짓게 됩니다.</p>
+
+      <p>아래의 데이터를 통해 만 21세부터 만 51세 이상까지 연령대 및 대표 모델별 무사고 기준 1년 평균 산정 금액 추이를 확인해 보시기 바랍니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>구분 및 가입 연령대</th>
+            <th>롱레인지 싱글모터 연간 평균 (원)</th>
+            <th>롱레인지 듀얼모터 연간 평균 (원)</th>
+            <th>주요 보험 할증 및 할인 반영 요소</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>만 21세 이하 (최초 가입)</td>
+            <td>2,300,000 ~ 2,900,000</td>
+            <td>2,700,000 ~ 3,400,000</td>
+            <td>가장 높은 손해율 적용, 자차 담보 극대화</td>
+          </tr>
+          <tr>
+            <td>만 26세 이상 (무사고 1년)</td>
+            <td>1,450,000 ~ 1,800,000</td>
+            <td>1,720,000 ~ 2,100,000</td>
+            <td>나이 한정 특약 적용 시작, 군 경력 인정 혜택</td>
+          </tr>
+          <tr>
+            <td>만 30세 이상 (부부 한정)</td>
+            <td>980,000 ~ 1,300,000</td>
+            <td>1,150,000 ~ 1,550,000</td>
+            <td>인터넷 전용 할인율 및 부부 범위 적용</td>
+          </tr>
+          <tr>
+            <td>만 35세 이상 (무사고 5년)</td>
+            <td>820,000 ~ 1,100,000</td>
+            <td>960,000 ~ 1,350,000</td>
+            <td>T-map 티맵 안전운전 추가 감액 12% 적용 가능</td>
+          </tr>
+          <tr>
+            <td>만 43세 이상 (기명 1인 전용)</td>
+            <td>710,000 ~ 950,000</td>
+            <td>830,000 ~ 1,180,000</td>
+            <td>가장 안정적인 연령 계층 요율 반영</td>
+          </tr>
+          <tr>
+            <td>만 51세 이상 (가족 한정)</td>
+            <td>650,000 ~ 880,000</td>
+            <td>760,000 ~ 1,050,000</td>
+            <td>자녀 동승 및 자녀 할인 특약 동시 적용 효과</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="chart-container">
+        <canvas id="polyPremiumChart" width="800" height="380" aria-label="폴스타4 모델 및 연령대별 평균 보험료 비교 그래프" role="img"></canvas>
+      </div>
+
+      <p>산출된 지표를 확인하면 운전 경력이 상대적으로 적은 만 21세 내외의 사회 초년생 신규 가입 시기에는 듀얼모터 기준 연간 최대 340만원에 육박하는 높은 납부 금액이 부과되는 것을 볼 수 있습니다. 반면, 무사고 연차를 쌓고 연령 한정이 넓어지는 만 30세 이상 혹은 만 43세 이상 구간에 도달하면 싱글모터 모델 기준 연평균 70만원에서 90만원 수준의 매우 합리적인 납입 비용 수준으로 부담이 축소되는 흐름이 뚜렷합니다.</p>
+    </section>
+
+    <section id="pro-con">
+      <h2>다이렉트 비대면 계약의 명확한 장단점 및 차이점</h2>
+      <p>대부분의 오너들이 비용 절감을 실현하기 위해 메이저 손보사의 인터넷 다이렉트 전용 사이트를 방문하거나 스마트폰 전용 금융 앱 혹은 어플 프로그램을 통해 본인의 직접 가입을 시도합니다. 비대면 다이렉트 가입이 오프라인 설계사를 통한 전통적 오프라인 계약 방식과 비교하여 가지는 분명한 장단점 및 차이점은 무엇인지 세밀하게 검토하는 것이 바람직합니다.</p>
+
+      <h3>다이렉트 계약의 주요 장점</h3>
+      <ul>
+        <li><strong>압도적인 가격 가성비:</strong> 모집 수수료나 지점 유지 관리비 등 불필요한 사업비 지출이 제외되므로 동일 보장 범위 대비 가장 저렴한곳 혹은 제일 싼곳을 직접 필터링할 수 있어 통상 15%에서 18.5%가량 고정 비용을 낮춥니다.</li>
+        <li><strong>시간적 편의성 확보:</strong> 별도의 대면 미팅 약속이나 전화 상담 컨설팅 절차를 긴 시간 대기할 필요 없이, 네이버 또는 카카오톡 인증서를 통해 본인인증을 마치면 단 5분 만에 본인의 맞춤형 산정 결과 조회가 즉시 가능합니다.</li>
+        <li><strong>플랫폼 기반 제휴 혜택:</strong> 가입 과정에서 네이버페이, 카카오페이, 토스 등의 간편결제 시스템을 결합할 경우 백화점 상품권 또는 모바일 주유 사은품 증정 혜택을 수령할 수 있으며, 연말이나 분기별로 집중 개최되는 카드사 자체 현금지원금 및 캐시백 지급 이벤트를 복합적으로 이용할 수 있어 경제적 효용이 배가됩니다.</li>
+      </ul>
+
+      <h3>다이렉트 계약의 주요 단점</h3>
+      <ul>
+        <li><strong>스스로 책임지는 보장 설계:</strong> 설계사의 전문 컨설팅 자문 없이 오로지 본인의 지식에 기반하여 가입 담보(대물배상 한도액, 무보험차 상해, 긴급출동 특약 등)를 개별 설정해야 하므로 잘못된 체크로 보장 공백이 생길 우려가 존재합니다.</li>
+        <li><strong>전기차 특화 특약 누락 위험:</strong> 폴스타4와 같은 프리미엄 순수 전기차종은 고전압 시스템 파손이나 배터리 침수 가치 감가에 대한 전문적인 보장 연계가 필수적이나, 단순 일반 약관만을 승인한 채 청약을 마쳐 유사시 자가 부담금이 크게 증가하는 불상사가 야기되기도 합니다.</li>
+      </ul>
+    </section>
+
+    <section id="saving-methods">
+      <h2>2026년 전기차 전용 다이렉트 보험료 최적 절감 전략</h2>
+      <p>매년 자동 지출되는 아까운 비용을 현격하게 하향 조정하기 위해 실제 활용할 수 있는 법적, 제도적 장치들과 결합 특약들을 구체적으로 제시해 드립니다.</p>
+      
+      <ol>
+        <li><strong>스마트 기기 연동 안전 운전 점수 특약 (T-map / 현대엠엔소프트):</strong> 스마트폰 내비게이션 앱을 작동한 상태에서 누적 주행 거리 1,000km를 달성하고, 급가속 및 급감속 제어를 준수하여 안전 점수 기준(보통 71점 내지 80점 이상)을 획득할 시 최소 9%에서 15.3% 수준의 다이렉트 할인을 차등 적용받을 수 있습니다.</li>
+        <li><strong>블랙박스 및 빌트인 카메라 선할인 특약:</strong> 출고 시 기본 장착된 고화질 빌트인 센서 시스템이나 애프터마켓 차량 블랙박스 장치를 사전 등록하여 전송하면 대략 1.5%에서 5%의 금액을 세이브할 수 있습니다.</li>
+        <li><strong>마일리지 주행거리 구간 환급 제도:</strong> 연간 차량 운행 빈도가 적은 주말 전용 오너의 경우, 연 단위 주행거리가 3,000km 미만부터 최대 15,000km 이내 범위에 위치할 때 세액 과세 기준에 따라 최대 35%에서 최소 2%까지의 최종 정산 환급 혜택을 돌려받을 수 있어 가계 유지비 개선에 일조합니다.</li>
+        <li><strong>대중교통 이용 연계 추가 감액:</strong> 출퇴근 시 지하철이나 노선버스를 정기적으로 이용하는 계약자가 피보험자로 등록되어 있는 경우, 직전 3개월 대중교통 카드로 일정액 이상의 결제 실적(예: 누적 12만원 이상)을 증빙하면 별도의 추가 디스카운트를 승인해 줍니다.</li>
+      </ol>
+    </section>
+
+    <section id="community-feedback">
+      <h2>보배드림, 디시인사이드 및 동호회 리얼 내돈내산 후기 종합</h2>
+      <p>네이버의 대표적인 전기차 사용자 친화 카페와 구글, 유튜브 플랫폼, 그리고 자동차 전문 커뮤니티인 디시인사이드, 보배드림, 펨코(에펨코리아) 등에서 수집한 폴스타4 소유자분들의 생생한 내돈내산 장기 이용 및 갱신 후기를 요약 전달해 드립니다.</p>
+
+      <p>보배드림에서 활동하는 닉네임 폴스타블루 오너는 만 38세 부부 한정으로 롱레인지 싱글모터 트림을 계약했는데, 메이저 다이렉트 업체를 통해 최종 연 84만원선에 사인했다는 후기를 남겼습니다. 특히 초기 가입 단계에서 토스 모바일 어플 전용 계산기 툴과 비교 플랫폼을 번갈아 구동해 봄으로써 상품권 증정 프로모션을 알차게 챙겨 매우 실용적인 계약을 맺었다고 강조했습니다.</p>
+
+      <p>반면 에펨코리아의 일원인 닉네임 일렉트릭카 오너는 20대 신규 취득 상황에서 사고 경력 무이력 자격을 부여받지 못해 최초 설계 시 수입 외제 전기차종 고유의 자차 부담 중량으로 인해 약 240만원대의 높은 단점이 도출되었다고 토로하기도 했습니다. 그는 단점 극복을 위해 부모님과의 공동명의(지분 1%)를 택한 후 아버님의 우량 할인 등급율에 얹어 '가족 한정' 특약으로 재산출하는 우회 전술을 도입하여 최종 약 110만원으로 절충하는 노하우를 공유해 주었습니다.</p>
+    </section>
+
+    <section id="faq-section">
+      <h2>폴스타4 가입 전 반드시 체크해야 할 관련 FAQ</h2>
+      <div class="faq-container">
+        
+        <div class="faq-item">
+          <button class="faq-trigger">Q1: 폴스타4의 자차 담보 산정 시 배터리 특별약관 가입이 왜 권장되나요?</button>
+          <div class="faq-content">
+            <p>A: 전기차의 고전압 배터리는 부분 파손 시 모듈 단위 수리가 쉽지 않아 팩 전체를 1대1 통교체하는 빈도가 높습니다. 이 경우 청구되는 부품 가격만 약 2,000만원에서 3,000만원을 상회하므로, 기존 감가상각액을 공제한 차액을 본인이 지불해야 할 상황이 생깁니다. 전기차 배터리 신가보상 특약을 탑재해 두면, 감가상각 금액에 대해 자기부담금 면제 형식으로 보험사가 신품 배터리 교환 비용 전액을 지급하므로 리스크 관리에 절대적으로 이롭습니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">Q2: 제미나이(Gemini)나 챗지피티(ChatGPT) 같은 인공지능 어시스턴트로 계산해보는 보험 가격이 정확한가요?</button>
+          <div class="faq-content">
+            <p>A: 챗지피티(ChatGPT)나 구글 제미나이(Gemini) 등 고도화된 AI 플랫폼은 2026년 현재 각 손해보험사가 공식 공개한 공시 요율과 과거 사고 통계 데이터를 기반으로 한 시뮬레이션 평균 단가를 빠르게 연산해 줍니다. 따라서 가벼운 트렌드 비교나 시장 조사를 시행할 때 매우 우수한 가이드를 받을 수 있으나, 가입자의 개별 사고 연차, 위반 실적, 상세 주소지 세부 등급 등의 특수 사항들은 반영되지 않으므로 개별 다이렉트 통합 사이트의 실제 산출 시스템과 연동하는 것이 정답입니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">Q3: 법인 명의로 폴스타4 차량을 가입할 때는 무엇이 다른가요?</button>
+          <div class="faq-content">
+            <p>A: 법인 명의의 업무용 자동차 가입 시에는 임직원 전용 자동차보험 특약에 필히 가입하셔야 연간 지출 비용에 대해 원활한 세무상 경비 인정(연간 최대 1,500만원 한도) 혜택을 부여받을 수 있습니다. 무사고 연수 계산 역시 운전자 개인이 아닌 해당 법인의 사고 지수 등급을 추종하므로, 운행 일지 작성 여부와 임직원 범위 세부 설정을 철저하게 검토하여 진행해야 세무 리스크가 최소화됩니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">Q4: 폴스타4의 후방 카메라 및 윈도우리스 설계가 자차 요율에 부정적 영향을 주지는 않나요?</button>
+          <div class="faq-content">
+            <p>A: 폴스타4는 뒷유리가 존재하지 않는 대신 지붕에 달린 초고화질 디지털 카메라를 이용해 룸미러로 후방 시야를 비추어 주는 시스템을 탑재하고 있습니다. 이로 인한 후방 사각지대 해소로 사고 위험성이 일부 줄어드는 긍정적인 평가도 존재하나, 카메라 모듈 자체가 외부 충격으로 소실될 시 센서 배선 부품 조립에 따르는 수리 단가 증가 요인이 작용하므로 보험 개발원 등급 평가 시 타 차종 대비 조금 더 엄격한 수리성 평가지수가 주어져 차량 등급율에 다소 소폭 요율 변동이 있을 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">Q5: 신규 계약 시 인터넷 플랫폼 혜택과 다이렉트 자체 할인은 중복 적용이 성립합니까?</button>
+          <div class="faq-content">
+            <p>A: 네, 성립합니다. 인터넷 채널에서 기본으로 제공하는 오프라인 대비 평균 15% 이상 인하 혜택은 요율 자체에 영구 선반영되는 기본 조건이며, 가입 청약서 제출 전에 별도로 네이버, 토스, 카카오톡 등을 통해 진입하여 정해진 제휴 신용카드사 결제 조건을 완수할 경우 제공되는 사은품이나 상품권 리베이트, 신규 지원금 혜택은 계약 체결 완료 후 30일 이내에 개별 지급되는 구조이므로 완전한 이중 중복 수혜가 이루어집니다.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="calculator-form">
+      <h2>폴스타4 다이렉트 모의 견적 문의 및 맞춤 설정</h2>
+      <p>본인의 구체적인 조건들을 선택하여 기입해 주시면, 최신 전기차 요율 정보가 최적화 반영된 1대1 비교 분석 포트폴리오를 빠르게 지원해 드리겠습니다. 필수 항목들을 면밀히 기재해 주실수록 산출 오차가 극단적으로 저하됩니다.</p>
+      
+      <form action="#" method="post" onsubmit="event.preventDefault(); alert('신청이 성공적으로 접수되었습니다. 담당 전문가가 신속하게 연락드리겠습니다.');">
+        <div class="form-grid">
+          
+          <div class="form-group">
+            <label for="userName">고객 성명 (또는 법인 명의)</label>
+            <input type="text" id="userName" name="userName" placeholder="실명을 입력해 주십시오" required>
+          </div>
+
+          <div class="form-group">
+            <label for="userPhone">휴대폰 번호 (임직원 연락처)</label>
+            <input type="tel" id="userPhone" name="userPhone" placeholder="010-XXXX-XXXX 형식" pattern="010-[0-9]{3,4}-[0-9]{4}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="userEmail">이메일 주소</label>
+            <input type="email" id="userEmail" name="userEmail" placeholder="id@domain.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="carModel">인수(출고) 대상 폴스타4 세부 모델</label>
+            <select id="carModel" name="carModel" required>
+              <option value="" disabled selected>선택해 주십시오</option>
+              <option value="single-long">롱레인지 싱글모터 (출고가 약 6,690만원)</option>
+              <option value="single-pilot">롱레인지 싱글모터 파일럿 패키지 포함</option>
+              <option value="dual-long">롱레인지 듀얼모터 (출고가 약 7,190만원)</option>
+              <option value="dual-performance">롱레인지 듀얼모터 퍼포먼스 패키지 포함</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="driverAge">가입 대상 최저 운전자 연령 제한</label>
+            <select id="driverAge" name="driverAge" required>
+              <option value="" disabled selected>연령 구간을 선택하십시오</option>
+              <option value="age-21">만 21세 이상 한정</option>
+              <option value="age-24">만 24세 이상 한정</option>
+              <option value="age-26">만 26세 이상 한정</option>
+              <option value="age-30">만 30세 이상 한정</option>
+              <option value="age-35">만 35세 이상 한정</option>
+              <option value="age-43">만 43세 이상 한정</option>
+              <option value="age-48">만 48세 이상 한정</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="driverScope">운전 자격 범위 지정 특약</label>
+            <select id="driverScope" name="driverScope" required>
+              <option value="" disabled selected>범위를 선택하십시오</option>
+              <option value="single">기명 피보험자 1인 전용</option>
+              <option value="couple">피보험자 및 배우자 2인 부부 한정</option>
+              <option value="family">피보험자 가족 전체 한정</option>
+              <option value="any">전체 누구나 운전 범위</option>
+              <option value="designated">피보험자 및 지정 타인 1인 한정</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mileageTarget">연간 예상 총 주행거리 설정</label>
+            <select id="mileageTarget" name="mileageTarget" required>
+              <option value="" disabled selected>주행 예상 거리를 골라주십시오</option>
+              <option value="under-3000">3,000km 이하 (마일리지 최대 환급 기대)</option>
+              <option value="under-5000">5,000km 이하</option>
+              <option value="under-10000">10,000km 이하</option>
+              <option value="under-15000">15,000km 이하</option>
+              <option value="over-20000">20,000km 초과 (무제한급 운행)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="accidentHistory">최근 3개년 사고 발생 유무</label>
+            <select id="accidentHistory" name="accidentHistory" required>
+              <option value="" disabled selected>사고 이력 상태 선택</option>
+              <option value="none">완전 무사고 (최근 3년 내 무사고 유지)</option>
+              <option value="once-small">소액 단순 물적 사고 1회 (자차 접수 이력)</option>
+              <option value="once-large">대인 대물 복합 사고 1회</option>
+              <option value="multiple">최근 3개년 통산 2회 이상 다수 사고 발생</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>희망 가입 및 관심 할인 특약 (복수 체크 가능)</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-tmap" name="specialDiscount" value="tmap">
+                <label for="chk-tmap">티맵 안전운전 점수 할인</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-mileage" name="specialDiscount" value="mileage">
+                <label for="chk-mileage">마일리지 환급 특약</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-child" name="specialDiscount" value="child">
+                <label for="chk-child">자녀 동승 추가 할인</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-blackbox" name="specialDiscount" value="blackbox">
+                <label for="chk-blackbox">블랙박스/커넥티드 장치</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-battery" name="specialDiscount" value="battery">
+                <label for="chk-battery">고전압 배터리 전액 신가보상</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="chk-transit" name="specialDiscount" value="transit">
+                <label for="chk-transit">대중교통 마일리지 환급</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="userMemo">추가 개별 희망 사항 및 문의 메세지</label>
+            <textarea id="userMemo" name="userMemo" rows="5" placeholder="궁금하신 기존 보험료 할인 갱신 이력 관리나 타사 이동 혜택 연계, 세무적 법인 임직원 약관 처리에 대한 상세 조언 요구사항 등을 자유롭게 서술해 주십시오."></textarea>
+          </div>
+
+        </div>
+        <button type="submit" class="cta-submit">입력 조건 기반 폴스타4 모의 비교 견적 요청하기</button>
+      </form>
+    </section>
+
+    <section id="external-resources">
+      <h2>공인된 공공 신뢰 기관 정보 및 참고 자료</h2>
+      <p>전기자동차 보장 요율 체계의 투명한 확인과 더불어 소비자의 기본 권익 보호를 위해 정부 기관 및 공공 금융 위원회에서 운영하는 아래의 신뢰도 높은 웹페이지들을 적극 참조해 주시기 바랍니다.</p>
+      
+      <ul class="external-link-list">
+        <li><a href="https://namu.wiki/w/%ED%8F%B4%EC%8A%A4%ED%83%80%204" target="_blank" rel="noopener">나무위키: 폴스타4 기술적 사양 및 모델 상세 제원 안내</a></li>
+        <li><a href="https://www.fss.or.kr" target="_blank" rel="noopener">금융감독원: 공식 행정 통합 관리 및 금융 소비자 권익 보호 대책</a></li>
+        <li><a href="https://www.molit.go.kr" target="_blank" rel="noopener">국토교통부: 2026 친환경 자동차 보급 정책 및 고전압 배터리 안전 규칙</a></li>
+        <li><a href="https://www.kidi.or.kr" target="_blank" rel="noopener">보험개발원: 자동차보험 자기차량수리비 등급별 할인 할증 통계 공시</a></li>
+        <li><a href="https://www.koroad.or.kr" target="_blank" rel="noopener">도로교통공단: 교통안전 교육 수료자 특별 대상 요율 할인 기준 안내</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Chart.js 라이브러리 및 렌더링 스크립트 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // FAQ 토글 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqTriggers = document.querySelectorAll('.faq-trigger');
+      
+      faqTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const content = trigger.nextElementSibling;
+          const isOpen = content.style.display === 'block';
+          
+          // 열려있는 대답들을 닫아주는 처리
+          document.querySelectorAll('.faq-content').forEach(c => c.style.display = 'none');
+          
+          if (!isOpen) {
+            content.style.display = 'block';
+          }
+        });
+      });
+
+      // Chart.js를 이용한 시각적 계층 그래프 드로잉
+      const ctx = document.getElementById('polyPremiumChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['만 21세 이하', '만 26세 이상', '만 30세 이상', '만 35세 이상', '만 43세 이상', '만 51세 이상'],
+          datasets: [
+            {
+              label: '롱레인지 싱글모터 평균 (만원)',
+              data: [260, 162, 114, 96, 83, 76],
+              backgroundColor: '#312e81',
+              borderRadius: 5,
+              barPercentage: 0.75,
+              categoryPercentage: 0.8
+            },
+            {
+              label: '롱레인지 듀얼모터 평균 (만원)',
+              data: [305, 191, 135, 115, 100, 90],
+              backgroundColor: '#0f766e',
+              borderRadius: 5,
+              barPercentage: 0.75,
+              categoryPercentage: 0.8
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return value + '만원';
+                }
+              },
+              grid: {
+                color: '#f1f5f9'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 15,
+                padding: 20,
+                font: {
+                  weight: '600'
+                }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: {
+                size: 14,
+                weight: 'bold'
+              },
+              bodyFont: {
+                size: 13
+              },
+              padding: 12,
+              displayColors: true,
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label.split(' ')[0] + ': ' + context.parsed.y + '만원';
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+  
